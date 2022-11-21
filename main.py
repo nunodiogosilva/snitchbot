@@ -62,9 +62,9 @@ def sendEmail(tweet):
 
 
 def sendTweet():
-    api = api()
-    tweet = getTweet()
     try:
+        api = api()
+        tweet = getTweet()
         api.update_status(tweet)
         sendEmail(tweet)
     except:
