@@ -19,7 +19,7 @@ def api():
 
 def hasTweets():
     db = firestore.client()
-    tweetsCollection = db.collection(u'Tweets')
+    tweetsCollection = firestore.client().collection(u'Tweets')
     tweetsStream = tweetsCollection.stream()
     tweetsUnsend = []
     for tweet in tweetsStream:
@@ -40,8 +40,6 @@ def getTweet():
 
 
 def sendEmail(tweet):
-    gmail = keys.gmail
-    password = keys.gmail_password
     subject = 'Snitch Bot'
     if tweet:
         body = f'🚨 {tweet} 🚨' if 'Snitch Bot was unable to tweet!' in tweet else f'''
@@ -53,14 +51,14 @@ def sendEmail(tweet):
     Snitch Bot run out of tweets! Feel free to add more 😈
     '''
     email = EmailMessage()
-    email['From'] = gmail
-    email['To'] = gmail
+    email['From'] = keys.gmail
+    email['To'] = keys.gmail
     email['subject'] = subject
     email.set_content(body)
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        smtp.login(gmail, password)
-        smtp.sendmail(gmail, gmail, email.as_string())
+        smtp.login(keys.gmail, keys.gmail_password)
+        smtp.sendmail(keys.gmail, keys.gmail, email.as_string())
 
 
 def sendTweet():
