@@ -19,7 +19,7 @@ def api():
 
 def hasTweets():
     db = firestore.client()
-    tweetsCollection = firestore.client().collection(u'Tweets')
+    tweetsCollection = db.collection(u'Tweets')
     tweetsStream = tweetsCollection.stream()
     tweetsUnsend = []
     for tweet in tweetsStream:
