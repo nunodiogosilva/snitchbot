@@ -12,4 +12,5 @@ There is a feature that let the user know via email if Snith Bot was unable to t
   * Tweepy Python Library (Twitter API)
 
 #
-# ⚠️ Disclaimer: This bot was created as a private joke!
+# ⚠️ Disclaimer: 
+  * This bot was created as a private joke and there are no bad intentions behind it's creation! 
