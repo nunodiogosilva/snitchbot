@@ -1,5 +1,8 @@
 import tweepy
 import keys
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 from random import randrange
 from email.message import EmailMessage
 import ssl
@@ -7,44 +10,33 @@ import smtplib
 import schedule
 import time
 
-tweets = ['É mais fácil separar a água do vinho que a hipocrisia da verdade no julgamento das ações humanas.',
-          'O que mais odeio é gente complicada e preconceituosa, hipocrisia e ser acordado. Nada consegue ser pior do que isso.',
-          'A mentira é muita vezes tão involuntária como a respiração.',
-          'Assim como uma gota de veneno compromete um balde inteiro, também a mentira, por menor que seja, estraga toda a nossa vida.',
-          'Existe muito pedaço de vidro a tentar disfarçar-se de diamante.',
-          'Neste momento a rapariga já se deve estar a coçar toda, parece que tem pulga',
-          'Uma mentira dá uma volta inteira ao mundo antes mesmo de a verdade ter oportunidade de se vestir.',
-          'Nenhum mentiroso tem uma memória suficientemente boa para ser um mentiroso de êxito.',
-          'O verdadeiro Snitch chegou e vem com tudo!',
-          'Inimigos honestos são mais dignos de confiança do que "amigos" oportunistas.',
-          'A falsidade é um caminho perigoso escolhido apenas por pessoas que não conseguem ter mérito no que fazem.',
-          'O oportunista é um falso herói, engana os inocentes e a boa fé destrói.',
-          'Muito cuidado na estrada da vida, pois há alienados na pista, oportunistas no acostamento, imbecis após a curva e bondosos na via de duplo sentido.',
-          'Não fales mal de alguém se não tens certeza, e se tiveres, pergunta-te por que estás a falar sobre isso.',
-          'Cuidado com os olhos atentos daqueles que têm a inveja como primazia e o oportunismo como farol.',
-          'Hoje lutam contra um inimigo invisível e que se utiliza de uma situação oportunista para a sua disseminação e evolução. Será um longo aprendizado para todos...',
-          'Não tenhas medo do inimigo que te ataca, mas sim do falso amigo que te abraça.'
-          'É melhor ser verdadeiro e solitário do que viver em falsidade e estar sempre acompanhado.',
-          'Só eu sei quem eu sou...',
-          'Se pararem de dizer mentiras a meu respeito, eu paro de dizer verdades a vosso respeito.',
-          'O carnaval já passou e as máscaras continuam a cair.',
-          'Cortei a relva e as cobras sairam!',
-          'Se nos julgamos melhores que os outros, por que esperamos deles melhores atitudes que as nossas?',
-          'Há um desamor nas pessoas, uma enorme falta de tudo, valores, princípios, atitudes, respeito, coerência, seriedade, responsabilidade, carácter, moral... Isso é muito triste!',
-          'Pessoas elevadas falam de ideias. Pessoas medianas falam de factos. Pessoas vulgares falam de pessoas.',
-          'Pessoas falsas merecem pensamentos verdadeiros, amigos somente a retribuição pela sua amizade eterna.',
-          'O boato é um vírus que nasce dos incapazes e que se prolifera nos imbecis.',
-          'Não te abras com teu "amigo" que ele um outro amigo tem. E o amigo do teu amigo possui amigos também...',
-          'Assim como árvores podres, amizades falsas tombarão também.',
-          'Se te revelares eu me revelarei também.',
-          'O amigo deve ser como o dinheiro, cujo valor já conhecemos antes de termos necessidade dele.',
-          'A única forma de se viver livre de amizades falsas é não tendo dinheiro.']
-
 
 def api():
     auth = tweepy.OAuthHandler(keys.api_key, keys.api_secret)
     auth.set_access_token(keys.access_token, keys.access_token_secret)
     return tweepy.API(auth)
+
+
+def hasTweets():
+    db = firestore.client()
+    tweetsCollection = db.collection(u'Tweets')
+    tweetsStream = tweetsCollection.stream()
+    tweetsUnsend = []
+    for tweet in tweetsStream:
+        if not tweet.to_dict()['sent']:
+            tweetsUnsend.append(
+                {'id': tweet.id, 'tweet': tweet.to_dict()['tweet']})
+    if not len(tweetsUnsend):
+        return False
+    else:
+        return tweetsUnsend, tweetsCollection
+
+
+def getTweet():
+    tweetsUnsend, tweetsCollection = hasTweets()
+    tweet = tweetsUnsend.pop(randrange(len(tweetsUnsend)))
+    tweetsCollection.document(tweet['id']).update({'sent': True})
+    return tweet['tweet']
 
 
 def sendEmail(tweet):
@@ -73,7 +65,7 @@ def sendEmail(tweet):
 
 def sendTweet():
     api = api()
-    tweet = tweets.pop(randrange(len(tweets)))
+    tweet = getTweet()
     try:
         api.update_status(tweet)
         sendEmail(tweet)
@@ -85,8 +77,10 @@ schedule.every(1200).to(1440).minutes.do(sendTweet)
 
 
 def main():
+    cred = credentials.Certificate(keys.firebase_credentials_path)
+    firebase_admin.initialize_app(cred)
     while 1:
-        if not len(tweets):
+        if not hasTweets():
             sendEmail(False)
             break
         schedule.run_pending()
