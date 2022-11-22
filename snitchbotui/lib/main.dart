@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:snitchbotui/requests.dart' as requests;
+import 'package:snitchbotui/variables.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,133 +52,131 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color(0xff1d1d1f),
       appBar: AppBar(
         backgroundColor: const Color(0xff151518),
-        title: const Text(
-          '🤖 Snitch Bot',
-          style: TextStyle(
-            fontFamily: "OpenSans",
-            fontSize: 25.0,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFEFEFEF),
-          ),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Center(
-                        child: SingleChildScrollView(
-                          child: AlertDialog(
-                            backgroundColor: const Color(0xff151518),
-                            title: Row(
-                              children: const [
-                                Icon(
-                                  Icons.schedule_send,
-                                  color: Color(0xFFEFEFEF),
-                                  size: 30,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10.0),
-                                  child: Text(
-                                    'Add Tweet',
-                                    style: TextStyle(
-                                      fontFamily: "OpenSans",
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFFEFEFEF),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            content: TextField(
-                              maxLines: 5,
-                              controller: tweetController,
-                              cursorColor: const Color(0xFFEFEFEF),
-                              textInputAction: TextInputAction.done,
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                fillColor: const Color(0xff1d1d1f),
-                                filled: true,
-                                hintText: "What's happening?",
-                                hintStyle: TextStyle(
-                                    fontFamily: "OpenSans",
-                                    fontSize: 18.0,
-                                    color: const Color(0xFFEFEFEF)
-                                        .withOpacity(0.5)),
-                                border: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color(0xFFEFEFEF),
-                                )),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color(0xFFEFEFEF),
-                                )),
+        leading: IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: AlertDialog(
+                          backgroundColor: const Color(0xff151518),
+                          title: Row(
+                            children: [
+                              Icon(
+                                Icons.schedule_send,
+                                color: const Color(0xFFEFEFEF),
+                                size: iconSize,
                               ),
-                              style: const TextStyle(
-                                fontFamily: "OpenSans",
-                                fontSize: 18.0,
-                                color: Color(0xFFEFEFEF),
-                              ),
-                            ),
-                            actions: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    0.0, 0.0, 20.0, 20.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Color(0xff151518),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFFEFEFEF),
-                                      ),
-                                      onPressed: () {
-                                        if (tweetController.text
-                                            .trim()
-                                            .isNotEmpty) {
-                                          requests.addTweet(
-                                              tweetController.text, context);
-                                          tweetController.text = '';
-                                        }
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Icon(
-                                        Icons.schedule_send,
-                                        color: Color(0xff151518),
-                                      ),
-                                    ),
-                                  ],
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  'Add Tweet',
+                                  style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    fontSize: dialogBoxTitleFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFFEFEFEF),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
+                          content: TextField(
+                            maxLines: 5,
+                            controller: tweetController,
+                            cursorColor: const Color(0xFFEFEFEF),
+                            textInputAction: TextInputAction.done,
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              fillColor: const Color(0xff1d1d1f),
+                              filled: true,
+                              hintText: "What's happening?",
+                              hintStyle: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: dialogBoxTextFieldFontSize,
+                                  color: const Color(0xFFEFEFEF)
+                                      .withOpacity(0.5)),
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFFEFEFEF),
+                                  )),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFFEFEFEF),
+                                  )),
+                            ),
+                            style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: dialogBoxTextFieldFontSize,
+                              color: const Color(0xFFEFEFEF),
+                            ),
+                          ),
+                          actions: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 0.0, 20.0, 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Color(0xff151518),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                      const Color(0xFFEFEFEF),
+                                    ),
+                                    onPressed: () {
+                                      if (tweetController.text
+                                          .trim()
+                                          .isNotEmpty) {
+                                        requests.addTweet(
+                                            tweetController.text, context);
+                                        tweetController.text = '';
+                                      }
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.schedule_send,
+                                      color: Color(0xff151518),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    });
-              },
-              icon: const Icon(
-                Icons.add_circle_outline,
-                color: Color(0xFFEFEFEF),
-                size: 30,
-              )),
-        ],
+                      ),
+                    );
+                  });
+            },
+            icon: Icon(
+              Icons.add,
+              color: const Color(0xFFEFEFEF),
+              size: iconSize,
+            )),
+        title: Text(
+          '🤖 Snitch Bot',
+          style: TextStyle(
+            fontFamily: "OpenSans",
+            fontSize: appBarTitleFontSize,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFFEFEFEF),
+          ),
+        ),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -185,9 +184,9 @@ class _HomeState extends State<Home> {
         backgroundColor: const Color(0xff151518),
         selectedItemColor: const Color(0xFFEFEFEF),
         unselectedItemColor: const Color(0xFFEFEFEF).withOpacity(0.5),
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        iconSize: 30,
+        selectedFontSize: bottomNavigationBarSelectedFontSize,
+        unselectedFontSize: bottomNavigationBarUnselectedFontSize,
+        iconSize: iconSize,
         elevation: 1,
         currentIndex: currentIndex,
         onTap: (index) {
@@ -220,7 +219,7 @@ class Avatar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: const CircleAvatar(
-        radius: 70.0,
+        radius: 60.0,
         backgroundColor: Color(0xff151518),
         backgroundImage: AssetImage('images/snitchbot.jpeg'),
       ),
@@ -241,11 +240,11 @@ class Tab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontFamily: "OpenSans",
-          fontSize: 22.0,
+          fontSize: tabTitleFontSize,
           fontWeight: FontWeight.bold,
-          color: Color(0xFFEFEFEF),
+          color: const Color(0xFFEFEFEF),
         ),
       ),
     );
@@ -272,13 +271,13 @@ class _TweetsState extends State<Tweets> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return const Center(
+              return Center(
                 child: Text(
                   'Something went wrong 😔',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: somethingWentWrongFontSize,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFEFEFEF)),
+                      color: const Color(0xFFEFEFEF)),
                 ),
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -328,350 +327,371 @@ class _TweetsState extends State<Tweets> {
                                 ListTile(
                                     title: Text(
                                       tweet['tweet'],
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontFamily: "OpenSans",
-                                        fontSize: 18.0,
-                                        color: Color(0xFFEFEFEF),
+                                        fontSize: listTileTitleFontSize,
+                                        color: const Color(0xFFEFEFEF),
                                       ),
                                     ),
-                                    trailing: PopupMenuButton(
-                                        icon: const Icon(
-                                          Icons.more_vert,
-                                          color: Color(0xFFEFEFEF),
-                                          size: 25,
+                                    trailing: PopupMenuButton<PopMenuValues>(
+                                      icon: const Icon(
+                                        Icons.more_vert,
+                                        color: Color(0xFFEFEFEF),
+                                        size: 25,
+                                      ),
+                                      color: const Color(0xff151518),
+                                      itemBuilder: (BuildContext context) => [
+                                        PopupMenuItem(
+                                          value: PopMenuValues.edit,
+                                          child: Text(
+                                            'Edit Tweet',
+                                            style: TextStyle(
+                                              fontFamily: "OpenSans",
+                                              fontSize: popupMenuItemFontSize,
+                                              color: const Color(0xFFEFEFEF),
+                                            ),
+                                          ),
                                         ),
-                                        color: const Color(0xff151518),
-                                        itemBuilder: (BuildContext context) => [
-                                              PopupMenuItem(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    tweetController.text =
-                                                        tweet['tweet'];
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return Center(
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              child:
-                                                                  AlertDialog(
-                                                                backgroundColor:
-                                                                    const Color(
-                                                                        0xff151518),
-                                                                title: Row(
-                                                                  children: const [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .edit,
-                                                                      color: Color(
-                                                                          0xFFEFEFEF),
-                                                                      size: 30,
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              10.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Edit Tweet',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontFamily:
-                                                                              "OpenSans",
-                                                                          fontSize:
-                                                                              22.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          color:
-                                                                              Color(0xFFEFEFEF),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
+                                        PopupMenuItem(
+                                          value: PopMenuValues.status,
+                                          child: Text(
+                                            label,
+                                            style: TextStyle(
+                                              fontFamily: "OpenSans",
+                                              fontSize: popupMenuItemFontSize,
+                                              color: const Color(0xFFEFEFEF),
+                                            ),
+                                          ),
+                                        ),
+                                        PopupMenuItem(
+                                          value: PopMenuValues.delete,
+                                          child: Text(
+                                            'Delete Tweet',
+                                            style: TextStyle(
+                                              fontFamily: "OpenSans",
+                                              fontSize: popupMenuItemFontSize,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      onSelected: (value) {
+                                        switch (value) {
+                                          case PopMenuValues.edit:
+                                            tweetController.text =
+                                                tweet['tweet'];
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Center(
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      child: AlertDialog(
+                                                        backgroundColor:
+                                                            const Color(
+                                                                0xff151518),
+                                                        title: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.edit,
+                                                              color: const Color(
+                                                                  0xFFEFEFEF),
+                                                              size: iconSize,
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets
+                                                                  .only(
+                                                                      left:
+                                                                          10.0),
+                                                              child: Text(
+                                                                'Edit Tweet',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      "OpenSans",
+                                                                  fontSize:
+                                                                      dialogBoxTitleFontSize,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: const Color(
+                                                                      0xFFEFEFEF),
                                                                 ),
-                                                                content:
-                                                                    TextField(
-                                                                  maxLines: 5,
-                                                                  controller:
-                                                                      tweetController,
-                                                                  cursorColor:
-                                                                      const Color(
-                                                                          0xFFEFEFEF),
-                                                                  textInputAction:
-                                                                      TextInputAction
-                                                                          .done,
-                                                                  autofocus:
-                                                                      true,
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    fillColor:
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        content: TextField(
+                                                          maxLines: 5,
+                                                          controller:
+                                                              tweetController,
+                                                          cursorColor:
+                                                              const Color(
+                                                                  0xFFEFEFEF),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .done,
+                                                          autofocus: true,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xff1d1d1f),
+                                                            filled: true,
+                                                            hintText:
+                                                                "What's happening?",
+                                                            hintStyle: TextStyle(
+                                                                fontFamily:
+                                                                    "OpenSans",
+                                                                fontSize: dialogBoxTextFieldFontSize,
+                                                                color: const Color(
+                                                                        0xFFEFEFEF)
+                                                                    .withOpacity(
+                                                                        0.5)),
+                                                            border:
+                                                                const OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                              color: Color(
+                                                                  0xFFEFEFEF),
+                                                            )),
+                                                            focusedBorder:
+                                                                const OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                              color: Color(
+                                                                  0xFFEFEFEF),
+                                                            )),
+                                                          ),
+                                                          style:
+                                                              TextStyle(
+                                                            fontFamily:
+                                                                "OpenSans",
+                                                            fontSize: dialogBoxTextFieldFontSize,
+                                                            color: const Color(
+                                                                0xFFEFEFEF),
+                                                          ),
+                                                        ),
+                                                        actions: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    20.0,
+                                                                    20.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .red,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons.close,
+                                                                    color: Color(
+                                                                        0xff151518),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 10,
+                                                                ),
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
                                                                         const Color(
-                                                                            0xff1d1d1f),
-                                                                    filled:
-                                                                        true,
-                                                                    hintText:
-                                                                        "What's happening?",
-                                                                    hintStyle: TextStyle(
-                                                                        fontFamily:
-                                                                            "OpenSans",
-                                                                        fontSize:
-                                                                            18.0,
-                                                                        color: const Color(0xFFEFEFEF)
-                                                                            .withOpacity(0.5)),
-                                                                    border:
-                                                                        const OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide(
-                                                                      color: Color(
-                                                                          0xFFEFEFEF),
-                                                                    )),
-                                                                    focusedBorder:
-                                                                        const OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide(
-                                                                      color: Color(
-                                                                          0xFFEFEFEF),
-                                                                    )),
+                                                                            0xFFEFEFEF),
                                                                   ),
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontFamily:
-                                                                        "OpenSans",
-                                                                    fontSize:
-                                                                        18.0,
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                    if (tweetController
+                                                                            .text
+                                                                            .trim()
+                                                                            .isNotEmpty &&
+                                                                        tweetController.text !=
+                                                                            tweet['tweet']) {
+                                                                      requests.editTweet(
+                                                                          snapshot
+                                                                              .data!
+                                                                              .docs[
+                                                                                  index]
+                                                                              .id,
+                                                                          tweetController
+                                                                              .text
+                                                                              .trim(),
+                                                                          context);
+                                                                    }
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons.edit,
                                                                     color: Color(
-                                                                        0xFFEFEFEF),
-                                                                  ),
-                                                                ),
-                                                                actions: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .fromLTRB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        20.0,
-                                                                        20.0),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            backgroundColor:
-                                                                                Colors.red,
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.of(context).pop();
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          child:
-                                                                              const Icon(
-                                                                            Icons.close,
-                                                                            color:
-                                                                                Color(0xff151518),
-                                                                          ),
-                                                                        ),
-                                                                        const SizedBox(
-                                                                          width:
-                                                                              10,
-                                                                        ),
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            backgroundColor:
-                                                                                const Color(0xFFEFEFEF),
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            if (tweetController.text.trim().isNotEmpty &&
-                                                                                tweetController.text != tweet['tweet']) {
-                                                                              requests.editTweet(snapshot.data!.docs[index].id, tweetController.text.trim(), context);
-                                                                            }
-                                                                            Navigator.of(context).pop();
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          child:
-                                                                              const Icon(
-                                                                            Icons.edit,
-                                                                            color:
-                                                                                Color(0xff151518),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        });
-                                                  },
-                                                  child: const Text(
-                                                    'Edit Tweet',
-                                                    style: TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 15.0,
-                                                      color: Color(0xFFEFEFEF),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              PopupMenuItem(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    requests.editTweetStatus(
-                                                        snapshot.data!
-                                                            .docs[index].id,
-                                                        !widget.sent,
-                                                        context);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text(
-                                                    label,
-                                                    style: const TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 15.0,
-                                                      color: Color(0xFFEFEFEF),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              PopupMenuItem(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return Center(
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              child:
-                                                                  AlertDialog(
-                                                                backgroundColor:
-                                                                    const Color(
                                                                         0xff151518),
-                                                                title: Row(
-                                                                  children: const [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .delete_forever,
-                                                                      color: Colors
-                                                                          .red,
-                                                                      size: 30,
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              10.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Delete Tweet',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontFamily:
-                                                                              "OpenSans",
-                                                                          fontSize:
-                                                                              22.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          color:
-                                                                              Colors.red,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                content:
-                                                                    const Text(
-                                                                  'Are you sure you want to delete this Tweet permanently?',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        "OpenSans",
-                                                                    fontSize:
-                                                                        18.0,
-                                                                    color: Color(
-                                                                        0xFFEFEFEF),
                                                                   ),
                                                                 ),
-                                                                actions: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .fromLTRB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        20.0,
-                                                                        20.0),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            backgroundColor:
-                                                                                const Color(0xFFEFEFEF),
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.of(context).pop();
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          child:
-                                                                              const Icon(
-                                                                            Icons.close,
-                                                                            color:
-                                                                                Color(0xff151518),
-                                                                          ),
-                                                                        ),
-                                                                        const SizedBox(
-                                                                          width:
-                                                                              10,
-                                                                        ),
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            backgroundColor:
-                                                                                Colors.red,
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            requests.deleteTweet(snapshot.data!.docs[index].id,
-                                                                                context);
-                                                                            Navigator.of(context).pop();
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          child:
-                                                                              const Icon(
-                                                                            Icons.delete_forever,
-                                                                            color:
-                                                                                Color(0xff151518),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                            break;
+                                          case PopMenuValues.status:
+                                            requests.editTweetStatus(
+                                                snapshot.data!.docs[index].id,
+                                                !widget.sent,
+                                                context);
+                                            break;
+                                          case PopMenuValues.delete:
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Center(
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      child: AlertDialog(
+                                                        backgroundColor:
+                                                            const Color(
+                                                                0xff151518),
+                                                        title: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .delete_forever,
+                                                              color: Colors.red,
+                                                              size: iconSize,
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets
+                                                                  .only(
+                                                                      left:
+                                                                          10.0),
+                                                              child: Text(
+                                                                'Delete Tweet',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      "OpenSans",
+                                                                  fontSize:
+                                                                      dialogBoxTitleFontSize,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ),
                                                               ),
                                                             ),
-                                                          );
-                                                        });
-                                                  },
-                                                  child: const Text(
-                                                    'Delete Tweet',
-                                                    style: TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 15.0,
-                                                      color: Colors.red,
+                                                          ],
+                                                        ),
+                                                        content: Text(
+                                                          'Are you sure you want to delete this Tweet permanently?',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "OpenSans",
+                                                            fontSize: dialogBoxTextFieldFontSize,
+                                                            color: const Color(
+                                                                0xFFEFEFEF),
+                                                          ),
+                                                        ),
+                                                        actions: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    20.0,
+                                                                    20.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        const Color(
+                                                                            0xFFEFEFEF),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons.close,
+                                                                    color: Color(
+                                                                        0xff151518),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 10,
+                                                                ),
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .red,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    requests.deleteTweet(
+                                                                        snapshot
+                                                                            .data!
+                                                                            .docs[index]
+                                                                            .id,
+                                                                        context);
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .delete_forever,
+                                                                    color: Color(
+                                                                        0xff151518),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ])),
+                                                  );
+                                                });
+                                            break;
+                                        }
+                                      },
+                                    )),
                                 const Padding(
                                     padding: EdgeInsets.only(bottom: 5.0)),
                                 Divider(

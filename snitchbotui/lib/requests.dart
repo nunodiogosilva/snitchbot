@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:snitchbotui/variables.dart';
 
 Stream<QuerySnapshot>? _tweetsStream;
 CollectionReference tweets = FirebaseFirestore.instance.collection('Tweets');
@@ -23,12 +24,12 @@ Future<void> addTweet(tweet, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Successfully added Tweet: $tweet",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -39,12 +40,12 @@ Future<void> addTweet(tweet, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Failed to add Tweet: $error",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -62,12 +63,12 @@ Future<void> editTweet(tweetId, tweet, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Successfully edited Tweet: $tweet",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -78,12 +79,12 @@ Future<void> editTweet(tweetId, tweet, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Failed to edit Tweet: $error",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -101,12 +102,12 @@ Future<void> editTweetStatus(tweetId, status, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Successfully edited Tweet Status: $status",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -117,12 +118,12 @@ Future<void> editTweetStatus(tweetId, status, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Failed to edit Tweet: $error",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -135,15 +136,15 @@ Future<void> deleteTweet(tweetId, context) async {
   try {
     await tweets.doc(tweetId).delete();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        backgroundColor: Color(0xff151518),
+      SnackBar(
+        backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Successfully deleted Tweet",
             style: TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
@@ -154,12 +155,12 @@ Future<void> deleteTweet(tweetId, context) async {
       SnackBar(
         backgroundColor: const Color(0xff151518),
         content: SizedBox(
-          height: 50,
+          height: snackBarHeight,
           child: Text(
             "Failed to delete Tweet: $error",
-            style: const TextStyle(
-              fontSize: 15,
-              color: Color(0xFFEFEFEF),
+            style: TextStyle(
+              fontSize: snackBarFontSize,
+              color: const Color(0xFFEFEFEF),
             ),
           ),
         ),
