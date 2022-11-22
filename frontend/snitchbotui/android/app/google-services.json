@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "359138995718",
+    "project_id": "snitchbot-6a6d4",
+    "storage_bucket": "snitchbot-6a6d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359138995718:android:9e4f61ec266cd8aa541d87",
+        "android_client_info": {
+          "package_name": "com.example.snitchbotui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359138995718-draujf94ph2dsmbpo1a7toivq9u5ekan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSWJgCnDG93p6mOt-qvabGuuQBdn85MtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359138995718-draujf94ph2dsmbpo1a7toivq9u5ekan.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "359138995718-qp533vg87culu7pn2a9i9e6j7uf3o2bs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.snitchbotui"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

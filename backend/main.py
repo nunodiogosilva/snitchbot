@@ -1,5 +1,5 @@
 import tweepy
-import keys
+import backend.keys as keys
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -21,20 +21,20 @@ def hasTweets():
     db = firestore.client()
     tweetsCollection = db.collection(u'Tweets')
     tweetsStream = tweetsCollection.stream()
-    tweetsUnsend = []
+    tweetsToBeSend = []
     for tweet in tweetsStream:
         if not tweet.to_dict()['sent']:
-            tweetsUnsend.append(
+            tweetsToBeSend.append(
                 {'id': tweet.id, 'tweet': tweet.to_dict()['tweet']})
-    if not len(tweetsUnsend):
+    if not len(tweetsToBeSend):
         return False
     else:
-        return tweetsUnsend, tweetsCollection
+        return tweetsToBeSend, tweetsCollection
 
 
 def getTweet():
-    tweetsUnsend, tweetsCollection = hasTweets()
-    tweet = tweetsUnsend.pop(randrange(len(tweetsUnsend)))
+    tweetsToBeSend, tweetsCollection = hasTweets()
+    tweet = tweetsToBeSend.pop(randrange(len(tweetsToBeSend)))
     tweetsCollection.document(tweet['id']).update({'sent': True})
     return tweet['tweet']
 
