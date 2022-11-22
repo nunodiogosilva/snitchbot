@@ -1,7 +1,6 @@
 # 🤖 Snitch Bot
-
-Snitch Bot sends Tweets in a Firebase Firestore database collection using a Python Script. 
-Snitch Bot UI provides a way to list, add, edit, mark as sent, mark as to be send and delete Tweets in that same Firebase Firestore database collection using Flutter & Dart.
+ * Snitch Bot sends Tweets from a Firebase Firestore database collection using a Python Script. 
+ * Snitch Bot UI provides a way to list, add, edit, mark as sent, mark as to be send and delete Tweets from that same Firebase Firestore database collection using Flutter & Dart.
 #
 
 # ⚙️ Features:
