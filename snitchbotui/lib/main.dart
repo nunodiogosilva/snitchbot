@@ -518,9 +518,6 @@ class _TweetsState extends State<Tweets> {
                                                                   ),
                                                                   onPressed:
                                                                       () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
                                                                     if (tweetController
                                                                             .text
                                                                             .trim()
